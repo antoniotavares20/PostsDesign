@@ -29,7 +29,14 @@ constructor(public postService: PostService){
 }
 ngOnInit(){
   this.postService.getPost();
-  this.postSub = this.postService.getPostUpdateListener().subscribe((posts: Post[])=>{ this.posts = posts});
+  this.postSub = this.postService.getPostUpdateListener()
+                                  .subscribe((posts: Post[])=>
+                                  { this.posts = posts});
+}
+
+onDelete(postId: string) {
+  console.log("EXECT TEXT"),
+  this.postService.deletePost(postId);
 }
 
 ngOnDestroy(){
