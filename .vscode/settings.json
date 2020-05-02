@@ -1,5 +1,7 @@
 {
     "material-icon-theme.files.associations": {
     
-    }
+    },
+    "workbench.colorTheme": "Red",
+    "workbench.iconTheme": "material-icon-theme"
 }

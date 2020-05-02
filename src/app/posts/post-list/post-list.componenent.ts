@@ -35,7 +35,6 @@ ngOnInit(){
 }
 
 onDelete(postId: string) {
-  console.log("EXECT TEXT"),
   this.postService.deletePost(postId);
 }
 
