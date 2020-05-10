@@ -26,7 +26,6 @@ import {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,

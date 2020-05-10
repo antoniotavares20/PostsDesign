@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 
+
 @Injectable( {providedIn: 'root'})
 
 export class PostService{
@@ -13,7 +14,7 @@ export class PostService{
 
 constructor(private http: HttpClient){ }
 
-getPost(){
+getPosts(){
   this.http.get<{message: string, posts: any }> ('http://localhost:3000/api/posts').pipe(map((postData) => {
     return postData.posts.map(post => {
       return {
@@ -27,6 +28,16 @@ getPost(){
     this.postsUpdated.next([...this.posts]);
   });
 
+}
+updatePost(id: string , title: string, content: string){
+  const post: Post  = { id: id, title: title, content: content};
+  this.http.put('http://localhost:3000/api/posts' + id, post)
+  .subscribe(response => console.log(response));
+  const updatePost = [...this.posts];
+
+  const oldPostIndex = updatePost.findIndex(p => p.id === post.id);
+  this.posts = updatePost;
+  this.postsUpdated.next([...this.posts])
 }
 
 deletePost(postId: string) {
@@ -55,6 +66,14 @@ addPost(title: string, content: string){
 
 getPostUpdateListener(){
     return this.postsUpdated.asObservable();
+}
+
+getPost(id: string){
+  //return {...this.posts.find( p => p.id === id)}
+  return this.http.get<{_id: string, title: string, content: string }>(
+    "http://localhost:3000/api/posts"+
+    id
+  )
 }
 }
 
