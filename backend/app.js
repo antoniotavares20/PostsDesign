@@ -34,7 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/api/post", (req, res, next) => {
+app.post("/api/posts", (req, res, next) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content

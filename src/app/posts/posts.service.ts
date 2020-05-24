@@ -41,7 +41,7 @@ updatePost(id: string , title: string, content: string){
 }
 
 deletePost(postId: string) {
-  this.http.delete("http://localhost:3000/api/posts/" + postId)
+  this.http.delete("http://localhost:3000/api/posts" + postId)
     .subscribe(() => {
       const updatePosts= this.posts.filter(post => {post.id !== postId});
       this.posts = updatePosts;
@@ -50,18 +50,23 @@ deletePost(postId: string) {
     });
 }
 
-addPost(title: string, content: string){
-  const post: Post = { id: null ,title: title, content: content }
-  this.http.post<{message: string, postsId: string}>("http://localhost:3000/api/posts",post)
-  .subscribe(responseData => {
-    const id = responseData.postsId;
-    post.id = id;
-    this.posts.push(post);
-    this.postsUpdated.next([...this.posts]);
-  })
-  this.posts.push(post);
-  this.postsUpdated.next([...this.posts])
-}
+  addPost(title: string, content: string) {
+    const post: Post = { id: null, title: title, content: content };
+
+    this.http
+      .post<{ message: string, postId: string }>("http://localhost:3000/api/posts", post)
+
+      .subscribe(responseData => {
+        const id = responseData.postId;
+        post.id = id;
+
+        this.posts.push(post);
+
+        this.postsUpdated.next([...this.posts]);
+      });
+    console.log(post);
+  }
+
 
 
 getPostUpdateListener(){

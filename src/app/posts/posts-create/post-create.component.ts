@@ -8,12 +8,12 @@ import { Post } from '../post.model';
 @Component({
     selector:'app-post-create',
     templateUrl:'./post-create.component.html',
-    styleUrls: ['./post-create.component.css']
+  styleUrls: ['./post-create-component.css']
 })
 
 export class PostCreateComponent{
   enteredTitle = "";
-    enteredContent = "";
+  enteredContent = "";
   post: Post;
     private mode = "create";
     private postId : string;
