@@ -76,14 +76,16 @@ app.delete("/api/posts/:id", (req, res, next) => {
     res.status(200).json({ message: "Post deleted!" });
   });
 });
-app.put("/app/posts/:id", (req, resp, next) => {
+
+app.put("/api/posts/:id", (req, resp, next) => {
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content
   });
+
   Post.updateOne({ _id: req.params.id }, post).then(result => {
-    console.log();
+    console.log(result);
     res.status(200).json({ message: "update realizad whid sucess" });
   });
 });

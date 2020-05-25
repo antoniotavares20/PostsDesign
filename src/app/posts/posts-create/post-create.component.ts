@@ -53,6 +53,7 @@ ngOnInit(){
 
       }else{
         this.postsService.updatePost(this.postId, form.value.title, form.value.content);
+
       }
 
       form.resetForm();
