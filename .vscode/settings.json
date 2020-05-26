@@ -3,5 +3,6 @@
     
     },
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Solarized Light"
+    "workbench.colorTheme": "Solarized Light",
+    "git.enableCommitSigning": true
 }
