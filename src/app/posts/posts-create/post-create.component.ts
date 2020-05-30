@@ -19,8 +19,6 @@ export class PostCreateComponent{
     private mode = "create";
     private postId : string;
 
-
-
     constructor(public postsService: PostService, public router: ActivatedRoute){
 
   };
