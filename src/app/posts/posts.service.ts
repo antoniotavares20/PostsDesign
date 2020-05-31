@@ -4,6 +4,7 @@ import { Subject } from 'rxjs'
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import { stringify } from 'querystring';
 
 
 @Injectable( {providedIn: 'root'})
@@ -53,15 +54,23 @@ deletePost(postId: string) {
     });
 }
 
-  addPost(title: string, content: string) {
-    const post: Post = { id: null, title: title, content: content };
+  addPost(title: string, content: string, image: File) {
+    const postData = new FormData();
+    postData.append("title", title);
+    postData.append("content", content);
+    postData.append("image", image);
+
+   // const post: Post = { id: null, title: title, content: content };
 
     this.http
-      .post<{ message: string, postId: string }>("http://localhost:3000/api/posts", post)
+      .post<{ message: string, postId: string }>("http://localhost:3000/api/posts", postData)
 
       .subscribe(responseData => {
-        const id = responseData.postId;
-        post.id = id;
+        const post: Post = {
+          id:responseData.postId,
+          title : title,
+          content: content
+        };
 
         this.posts.push(post);
 
@@ -69,7 +78,7 @@ deletePost(postId: string) {
 
         this.router.navigate(["/"])
       });
-    console.log(post);
+
   }
 
 
