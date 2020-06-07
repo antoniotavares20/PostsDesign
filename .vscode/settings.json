@@ -3,6 +3,6 @@
     
     },
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Visual Studio Dark",
-    "git.enableCommitSigning": true
+    "git.enableCommitSigning": true,
+    "workbench.colorTheme": "Visual Studio Light"
 }
