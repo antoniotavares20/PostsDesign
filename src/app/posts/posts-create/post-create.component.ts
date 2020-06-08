@@ -4,6 +4,7 @@ import { NgForm, FormGroup, FormControl, Validator, Validators} from '@angular/f
 import { PostService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from "@angular/router"
 import { Post } from '../post.model';
+import {mimeType} from './mime-type-validator';
 
 @Component({
     selector:'app-post-create',
@@ -18,19 +19,22 @@ export class PostCreateComponent{
   form: FormGroup;
   imagePreview: string;
   isLoading = false;
+  private mode = "create";
+  private postId : string;
 
-    private mode = "create";
-    private postId : string;
-
-    constructor(public postsService: PostService, public router: ActivatedRoute){
+    constructor(
+      public postsService: PostService,
+      public router: ActivatedRoute){
 
   };
 
 ngOnInit(){
   this.form = new FormGroup({
-    'title' : new FormControl(null, {validators:[Validators.required, Validators.minLength(3)]}),
-    'content': new FormControl(null, {validators: [Validators.required]})
+  title : new FormControl(null, {validators:[Validators.required, Validators.minLength(3)]}),
+  content: new FormControl(null, {validators: [Validators.required]}),
+    image: new FormControl(null, { validators: [Validators.required], asyncValidators:[mimeType]})
   });
+
   this.router.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has('postId')){
         this.mode = "edit";
@@ -43,11 +47,13 @@ ngOnInit(){
             this.post = {
               id:postData._id,
               title: postData.title,
-              content: postData.content
+              content: postData.content,
+              imagePath: null
             }
             this.form.setValue({
               title: this.post.title,
-              content: this.post.content
+              content: this.post.content,
+              image: this.post.imagePath
             });
               });}
             else{
@@ -85,7 +91,8 @@ ngOnInit(){
         this.postsService.updatePost(
               this.postId,
               this.form.value.title,
-              this.form.value.content
+              this.form.value.content,
+              this.form.value.image
 
               );
               this.form.reset();
